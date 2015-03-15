@@ -11,19 +11,16 @@
 |
 */
 
-Route::group(['namespace' => 'Frontend'], function()
-{
-    Route::get('/', 'HomeController@index');
-    Route::get('/{slug}', [ 'as' => 'category', 'uses' => 'CategoryController@show' ]);
-});
-
 Route::group(['namespace' => 'Admin'], function()
 {
     Route::get('/admin', 'DashboardController@index');
 });
 
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('/', 'FrontEndController@index');
+Route::get('/{category}', [ 'as' => 'category', 'uses' => 'FrontEndController@category' ]);
+Route::get('/{category}/{species}', [ 'as' => 'species', 'uses' => 'FrontEndController@species' ]);

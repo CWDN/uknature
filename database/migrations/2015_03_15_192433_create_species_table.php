@@ -19,6 +19,7 @@ class CreateSpeciesTable extends Migration {
 			$table->string('binomial');
 			$table->text('description');
 			$table->string('slug');
+			$table->integer('category_id');
 			$table->timestamps();
 		});
 	}

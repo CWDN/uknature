@@ -2,6 +2,6 @@
 
 @section('content')
 
-<h1>home page</h1>
+    <h1>{{$species->name}}</h1>
 
 @endsection
