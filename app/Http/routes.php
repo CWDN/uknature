@@ -11,9 +11,17 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::group(['namespace' => 'Frontend'], function()
+{
+    Route::get('/', 'HomeController@index');
+    Route::get('/{slug}', [ 'as' => 'category', 'uses' => 'CategoryController@show' ]);
+});
 
-Route::get('/admin', 'Admin\DashboardController@index');
+Route::group(['namespace' => 'Admin'], function()
+{
+    Route::get('/admin', 'DashboardController@index');
+});
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

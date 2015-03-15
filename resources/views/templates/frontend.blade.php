@@ -53,6 +53,7 @@
 		</div>
 	</nav>
 
+    @include('frontend.partials.category-list', [ 'categories' => $categories ])
 	@yield('content')
 
 	<!-- Scripts -->

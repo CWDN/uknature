@@ -1,5 +1,7 @@
 @extends('templates.frontend')
 
 @section('content')
-home page
+
+    <h1>{{$category->name}}</h1>
+
 @endsection
