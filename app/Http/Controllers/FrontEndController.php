@@ -15,6 +15,8 @@ class FrontEndController extends Controller {
 
     public function index()
     {
+        $this->viewData['recent'] = Species::orderBy('updated_at','DESC')->take(5)->get();
+
         return view('frontend.home', $this->viewData);
     }
 

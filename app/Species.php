@@ -4,7 +4,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Species extends Model {
 
-	protected $fillable = ['name', 'slug'];
+	protected $fillable = ['name', 'binomial', 'description', 'slug'];
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
 
     public static function bySlug($slug)
     {
