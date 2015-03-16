@@ -5,7 +5,7 @@ use App\Species;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SpeciesTableSeeder extends Seeder
+class SpeciesSeeder extends Seeder
 {
     public function run()
     {

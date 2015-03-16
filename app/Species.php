@@ -11,6 +11,11 @@ class Species extends Model {
         return $this->belongsTo('App\Category');
     }
 
+    public function images()
+    {
+        return $this->hasMany('App\Image');
+    }
+
     public static function bySlug($slug)
     {
         return self::where('slug', $slug)->firstOrFail();
