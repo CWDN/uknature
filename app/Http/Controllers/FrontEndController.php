@@ -6,8 +6,6 @@ use App\Species;
 
 class FrontEndController extends Controller {
 
-    public $viewData = [];
-
 	public function __construct()
 	{
         $this->viewData['categories'] = Category::all();

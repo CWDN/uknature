@@ -11,9 +11,10 @@
 |
 */
 
-Route::group(['namespace' => 'Admin'], function()
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function()
 {
-    Route::get('/admin', 'DashboardController@index');
+    Route::get('/', 'DashboardController@index');
+    Route::resource('/species', 'SpeciesController');
 });
 
 Route::controllers([
