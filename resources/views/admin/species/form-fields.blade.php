@@ -4,6 +4,22 @@
     @if ($errors->has('name')) <p class="help-block">{{ $errors->first('name') }}</p> @endif
 </div>
 
+<fieldset>
+
+    <div class="form-group @if ($errors->has('image')) has-error @endif">
+        {!! Form::label('image', 'Image') !!}
+        {!! Form::file('image', null, array('class' => 'form-control')) !!}
+        @if ($errors->has('image')) <p class="help-block">{{ $errors->first('image') }}</p> @endif
+    </div>
+
+    <div class="form-group @if ($errors->has('caption')) has-error @endif">
+        {!! Form::label('caption', 'Caption') !!}
+        {!! Form::text('caption', null, array('class' => 'form-control')) !!}
+        @if ($errors->has('caption')) <p class="help-block">{{ $errors->first('caption') }}</p> @endif
+    </div>
+
+</fieldset>
+
 <div class="form-group @if ($errors->has('binomial')) has-error @endif">
     {!! Form::label('binomial', 'Binomial') !!}
     {!! Form::text('binomial', null, array('class' => 'form-control')) !!}

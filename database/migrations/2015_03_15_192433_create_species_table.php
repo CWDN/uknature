@@ -20,6 +20,7 @@ class CreateSpeciesTable extends Migration {
 			$table->text('description');
 			$table->string('slug');
 			$table->integer('category_id');
+            $table->softDeletes();
 			$table->timestamps();
 		});
 	}

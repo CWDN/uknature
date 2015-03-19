@@ -4,6 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Species extends Model {
 
+    public $timestamps = true;
+
 	protected $fillable = ['name', 'binomial', 'description', 'slug'];
 
     public function category()

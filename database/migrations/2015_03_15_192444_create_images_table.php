@@ -19,6 +19,7 @@ class CreateImagesTable extends Migration {
 			$table->string('caption');
 			$table->integer('order');
             $table->integer('species_id');
+            $table->softDeletes();
 			$table->timestamps();
 		});
 	}

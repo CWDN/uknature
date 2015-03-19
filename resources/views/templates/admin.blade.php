@@ -33,7 +33,8 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
+					<li><a href="{{ route('admin.index') }}">Home</a></li>
+					<li><a href="{{ route('admin.category.index') }}">Categories</a></li>
 					<li><a href="{{ route('admin.species.index') }}">Species</a></li>
 				</ul>
 
@@ -53,7 +54,13 @@
 		</div>
 	</nav>
 
-	@yield('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+	            @yield('content')
+            </div>
+        </div>
+    </div>
 
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
