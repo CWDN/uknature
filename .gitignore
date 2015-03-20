@@ -2,3 +2,5 @@
 /node_modules
 .env*
 /.idea
+/public/images
+/public/css/*.map

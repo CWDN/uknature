@@ -4,22 +4,6 @@
     @if ($errors->has('name')) <p class="help-block">{{ $errors->first('name') }}</p> @endif
 </div>
 
-<fieldset>
-
-    <div class="form-group @if ($errors->has('image')) has-error @endif">
-        {!! Form::label('image', 'Image') !!}
-        {!! Form::file('image', null, array('class' => 'form-control')) !!}
-        @if ($errors->has('image')) <p class="help-block">{{ $errors->first('image') }}</p> @endif
-    </div>
-
-    <div class="form-group @if ($errors->has('caption')) has-error @endif">
-        {!! Form::label('caption', 'Caption') !!}
-        {!! Form::text('caption', null, array('class' => 'form-control')) !!}
-        @if ($errors->has('caption')) <p class="help-block">{{ $errors->first('caption') }}</p> @endif
-    </div>
-
-</fieldset>
-
 <div class="form-group @if ($errors->has('binomial')) has-error @endif">
     {!! Form::label('binomial', 'Binomial') !!}
     {!! Form::text('binomial', null, array('class' => 'form-control')) !!}
@@ -43,3 +27,45 @@
     {!! Form::text('slug', null, array('class' => 'form-control')) !!}
     @if ($errors->has('slug')) <p class="help-block">{{ $errors->first('slug') }}</p> @endif
 </div>
+<hr />
+@for ($i = 0; $i < count($images); $i++) <?php $image = $images[$i]; ?>
+<div class="row">
+    <div class="col-xs-4">
+        <div class="form-group @if ($errors->has('image')) has-error @endif">
+            {!! Form::label('images[]', 'Image ' . ($i+1)) !!}
+            {!! Form::file('images[]', null, array('class' => 'form-control')) !!}
+            @if ($errors->has('image')) <p class="help-block">{{ $errors->first('image') }}</p> @endif
+        </div>
+    </div>
+    <div class="col-xs-2">
+        <img class="thumbnail" src="/{{$image->src}}">
+    </div>
+    <div class="col-xs-6">
+        <div class="form-group @if ($errors->has('caption')) has-error @endif">
+            {!! Form::hidden('imageids[]', $image->id) !!}
+            {!! Form::label('captions[]', 'Caption') !!}
+            {!! Form::text('captions[]', $image->caption, array('class' => 'form-control')) !!}
+            @if ($errors->has('caption')) <p class="help-block">{{ $errors->first('caption') }}</p> @endif
+        </div>
+    </div>
+</div>
+    <hr />
+@endfor
+<div class="row">
+    <div class="col-xs-6">
+        <div class="form-group @if ($errors->has('image')) has-error @endif">
+            {!! Form::label('images[]', 'New image') !!}
+            {!! Form::file('images[]', null, array('class' => 'form-control')) !!}
+            @if ($errors->has('image')) <p class="help-block">{{ $errors->first('image') }}</p> @endif
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="form-group @if ($errors->has('caption')) has-error @endif">
+            {!! Form::label('captions[]', 'Caption') !!}
+            {!! Form::hidden('imageids[]', null) !!}
+            {!! Form::text('captions[]', null, array('class' => 'form-control')) !!}
+            @if ($errors->has('caption')) <p class="help-block">{{ $errors->first('caption') }}</p> @endif
+        </div>
+    </div>
+</div>
+<hr />

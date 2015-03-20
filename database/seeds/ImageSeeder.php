@@ -14,8 +14,8 @@ class ImageSeeder extends Seeder
 
         $data = [
             ['images/test-image-1.jpg', 'caption 1', 1, 'test-species-1'],
-            ['images/test-image-2.jpg', 'caption 2', 2, 'test-species-1'],
-            ['images/test-image-3.jpg', 'caption 3', 3, 'test-species-1'],
+            ['images/test-image-1.jpg', 'caption 2', 2, 'test-species-2'],
+            ['images/test-image-1.jpg', 'caption 3', 3, 'test-species-3'],
         ];
 
         foreach($data as $item) {

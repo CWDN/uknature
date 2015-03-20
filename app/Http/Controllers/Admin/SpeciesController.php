@@ -67,19 +67,9 @@ class SpeciesController extends CrudController {
             $species = Species::find($id);
             $species->fill($input);
 
-            if (Input::hasFile('image'))
-            {
-                $file = Input::file('image');
-                $file->move('images/uploads', $file->getClientOriginalName());
+            //dd(Input::get('imageids'), Input::get('captions'), Input::file('images'));
 
-                $image = new Image([
-                    'src' => 'images/uploads/'. $file->getClientOriginalName(),
-                    'caption' => Input::get('caption'),
-                    'order' => 0
-                ]);
-
-                $species->images()->save($image);
-            }
+            $this->handleImages($species);
 
             $category = Category::find($input['category']);
             $species->category()->associate($category);
@@ -90,6 +80,54 @@ class SpeciesController extends CrudController {
 
             return Redirect::route($this->view . '.index');
         }
+    }
+
+    private function handleImages($species) {
+
+        foreach(Input::get('imageids') as $ix => $id) {
+
+            $file = Input::file('images')[$ix];
+            $caption = Input::get('captions')[$ix];
+
+            if($id == "") {
+                if(is_null($file)) { continue; }
+                $image = new Image();
+            } else {
+                $image = Image::find($id);
+            }
+
+            if(!is_null($file)) {
+                $file->move('images/uploads', $file->getClientOriginalName());
+                $image->src = 'images/uploads/' . $file->getClientOriginalName();
+            }
+
+            $image->caption = $caption;
+            $image->order = $ix;
+
+            $species->images()->save($image);
+        }
+
+    }
+
+
+    public function create()
+    {
+        $this->viewData['images'] = [];
+
+        return View::make($this->view . '.create', $this->viewData);
+    }
+
+    public function edit($id)
+    {
+        $model = $this->model;
+
+        $item = $model::find($id);
+
+        $this->viewData['item'] = $item;
+
+        $this->viewData['images'] = $item->images->all();
+
+        return View::make($this->view . '.edit', $this->viewData);
     }
 
 }
