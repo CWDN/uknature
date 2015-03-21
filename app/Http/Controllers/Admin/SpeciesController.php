@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Image;
 use App\Species;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -67,7 +68,7 @@ class SpeciesController extends CrudController {
             $species = Species::find($id);
             $species->fill($input);
 
-            //dd(Input::get('imageids'), Input::get('captions'), Input::file('images'));
+            //dd(Input::get('imagedelete'),Input::get('imageid'), Input::get('caption'), Input::file('image'));
 
             $this->handleImages($species);
 
@@ -84,10 +85,33 @@ class SpeciesController extends CrudController {
 
     private function handleImages($species) {
 
-        foreach(Input::get('imageids') as $ix => $id) {
+        $ids = Input::get('imageid');
+        $deletions = Input::get('imagedelete');
+        $captions = Input::get('caption');
+        $files = Input::file('image');
 
-            $file = Input::file('images')[$ix];
-            $caption = Input::get('captions')[$ix];
+        if(!is_null($deletions)) {
+            foreach ($deletions as $ix => $id) {
+
+                $image = Image::find($id);
+
+                File::delete($image->src);
+
+                $image->delete();
+
+                $key = array_search($id, $ids);
+
+                // remove from other arrays
+                array_splice($ids, $key, 1);
+                array_splice($captions, $key, 1);
+                array_splice($files, $key, 1);
+            }
+        }
+
+        foreach($ids as $ix => $id) {
+
+            $file = $files[$ix];
+            $caption = $captions[$ix];
 
             if($id == "") {
                 if(is_null($file)) { continue; }

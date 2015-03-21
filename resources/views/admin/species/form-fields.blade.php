@@ -27,45 +27,66 @@
     {!! Form::text('slug', null, array('class' => 'form-control')) !!}
     @if ($errors->has('slug')) <p class="help-block">{{ $errors->first('slug') }}</p> @endif
 </div>
-<hr />
+<ul class="image-list">
 @for ($i = 0; $i < count($images); $i++) <?php $image = $images[$i]; ?>
-<div class="row">
+<li class="row">
+    <div class="col-xs-1">
+        <span class="drag-handle glyphicon glyphicon-menu-hamburger"></span>
+    </div>
     <div class="col-xs-4">
         <div class="form-group @if ($errors->has('image')) has-error @endif">
-            {!! Form::label('images[]', 'Image ' . ($i+1)) !!}
-            {!! Form::file('images[]', null, array('class' => 'form-control')) !!}
+            {!! Form::label('image[]', 'Image ' . ($i+1)) !!}
+            {!! Form::file('image[]', array('class' => 'form-control')) !!}
             @if ($errors->has('image')) <p class="help-block">{{ $errors->first('image') }}</p> @endif
         </div>
     </div>
     <div class="col-xs-2">
         <img class="thumbnail" src="/{{$image->src}}">
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-4">
         <div class="form-group @if ($errors->has('caption')) has-error @endif">
-            {!! Form::hidden('imageids[]', $image->id) !!}
-            {!! Form::label('captions[]', 'Caption') !!}
-            {!! Form::text('captions[]', $image->caption, array('class' => 'form-control')) !!}
+            {!! Form::hidden('imageid[]', $image->id) !!}
+            {!! Form::hidden('imagedelete[]', $image->id, [ 'disabled' => true]) !!}
+            {!! Form::label('caption[]', 'Caption') !!}
+            {!! Form::text('caption[]', $image->caption, array('class' => 'form-control')) !!}
             @if ($errors->has('caption')) <p class="help-block">{{ $errors->first('caption') }}</p> @endif
         </div>
     </div>
-</div>
-    <hr />
+    <div class="col-xs-1">
+        <a class="remove-image"><span class="remove glyphicon glyphicon-remove"></span></a>
+    </div>
+</li>
 @endfor
-<div class="row">
-    <div class="col-xs-6">
+<li class="row new-image new-image-template">
+    <div class="col-xs-1">
+        <span class="drag-handle glyphicon glyphicon-menu-hamburger"></span>
+    </div>
+    <div class="col-xs-4">
         <div class="form-group @if ($errors->has('image')) has-error @endif">
-            {!! Form::label('images[]', 'New image') !!}
-            {!! Form::file('images[]', null, array('class' => 'form-control')) !!}
+            {!! Form::label('image[]', 'New image') !!}
+            {!! Form::file('image[]', array('class' => 'form-control', 'disabled' => true)) !!}
             @if ($errors->has('image')) <p class="help-block">{{ $errors->first('image') }}</p> @endif
         </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-2">
+        <img class="thumbnail" src="/images/temp-thumbnail.png">
+    </div>
+    <div class="col-xs-4">
         <div class="form-group @if ($errors->has('caption')) has-error @endif">
-            {!! Form::label('captions[]', 'Caption') !!}
-            {!! Form::hidden('imageids[]', null) !!}
-            {!! Form::text('captions[]', null, array('class' => 'form-control')) !!}
+            {!! Form::label('caption[]', 'Caption') !!}
+            {!! Form::hidden('imageid[]', null, array('disabled' => true )) !!}
+            {!! Form::text('caption[]', null, array('class' => 'form-control', 'disabled' => true)) !!}
             @if ($errors->has('caption')) <p class="help-block">{{ $errors->first('caption') }}</p> @endif
         </div>
     </div>
+    <div class="col-xs-1">
+        <a class="remove-image"><span class="remove glyphicon glyphicon-remove"></span></a>
+    </div>
+</li>
+</ul>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <button class="btn btn-success add-new-image"><span class="glyphicon glyphicon-plus"></span> Add image</button>
+    </div>
 </div>
-<hr />
+<script src="/js/species-form.js"></script>
