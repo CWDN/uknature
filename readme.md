@@ -1,2 +1,1 @@
-### todo
- - remove registration
+
