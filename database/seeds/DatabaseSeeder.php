@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		$this->call('UserSeeder');
-		$this->call('CategorySeeder');
+		//$this->call('CategorySeeder');
 		$this->call('SpeciesSeeder');
 		$this->call('ImageSeeder');
 	}

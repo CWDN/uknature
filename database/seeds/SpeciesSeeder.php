@@ -2,34 +2,49 @@
 
 use App\Category;
 use App\Species;
+use Goodby\CSV\Import\Standard\LexerConfig;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Goodby\CSV\Import\Standard\Lexer;
+use Goodby\CSV\Import\Standard\Interpreter;
 
 class SpeciesSeeder extends Seeder
 {
     public function run()
     {
         DB::table('species')->delete();
+        DB::table('categories')->delete();
 
-        $data = [
-            ['test species 1', 'testus speciesus 1', 'description 1', 'test-species-1', 'test-category-1'],
-            ['test species 2', 'testus speciesus 2', 'description 2', 'test-species-2', 'test-category-1'],
-            ['test species 3', 'testus speciesus 3', 'description 3', 'test-species-3', 'test-category-1'],
-            ['test species 4', 'testus speciesus 4', 'description 4', 'test-species-4', 'test-category-1'],
-            ['test species 5', 'testus speciesus 5', 'description 5', 'test-species-5', 'test-category-2'],
-            ['test species 6', 'testus speciesus 6', 'description 6', 'test-species-6', 'test-category-2'],
-            ['test species 7', 'testus speciesus 7', 'description 7', 'test-species-7', 'test-category-3'],
-        ];
+        $config = new LexerConfig();
+        $config->setIgnoreHeaderLine(true);
 
-        foreach($data as $item) {
-            $species = new Species([
-                'name' => $item[0],
-                'binomial' => $item[1],
-                'description' => $item[2],
-                'slug' => $item[3],
+        $lexer = new Lexer($config);
+        $interpreter = new Interpreter();
+
+        $interpreter->addObserver(function(array $row) {
+
+            $row = array_combine(['category', 'name', 'binomial', 'description'], $row);
+
+            $row['slug'] = $this->slug($row['binomial'] . ' ' . $row['name']);
+
+            $species = new Species($row);
+
+            $category = Category::firstOrCreate([
+                'name' => $row['category'],
+                'slug' => $this->slug($row['category'])
             ]);
-            $category = Category::bySlug($item[4]);
+
             $category->species()->save($species);
-        }
+
+        });
+
+        $lexer->parse('database/data/species.csv', $interpreter);
+    }
+
+    public function slug($str)
+    {
+        $slug = trim(strtolower($str));
+
+        return preg_replace("![^a-z0-9]+!i", "-", $slug);
     }
 }

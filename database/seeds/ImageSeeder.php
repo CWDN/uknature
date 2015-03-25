@@ -13,9 +13,11 @@ class ImageSeeder extends Seeder
         DB::table('images')->delete();
 
         $data = [
-            ['images/test-image-1.jpg', 'caption 1', 1, 'test-species-1'],
-            ['images/test-image-1.jpg', 'caption 2', 2, 'test-species-2'],
-            ['images/test-image-1.jpg', 'caption 3', 3, 'test-species-3'],
+            //['images/test.jpg', 'caption 1', 1, 'test-species-1'],
+            //['images/test.jpg', 'caption 2', 2, 'test-species-2'],
+            //['images/test.jpg', 'caption 3', 3, 'test-species-3'],
+            //['images/test.jpg', 'caption 3', 3, 'test-species-4'],
+            //['images/test.jpg', 'caption 3', 3, 'test-species-5'],
         ];
 
         foreach($data as $item) {
