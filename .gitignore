@@ -1,6 +1,6 @@
 /vendor
 /node_modules
-.env*
+.env
 /.idea
 /public/images
-/public/css/*.map
+/public/css
